@@ -1,10 +1,12 @@
 package unn.jdbctest;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Scanner;
 
 public class JdbcTest {
@@ -63,10 +65,28 @@ public class JdbcTest {
 	public static void main(String[] args) throws Throwable {
 	
 		final Connection c = DriverManager.getConnection("jdbc:postgresql://192.168.99.100/test", "test", "test");
-	
-		Statement s = c.createStatement();
 
-		f2(c);
+		XDAO xdao = new XDAO(c);
+		
+		List<X> l = xdao.findAll();
+		
+		for(X x : l) {
+			System.out.println(x);
+		}
+		
+		xdao.insert(new X(-1, "HAHAHA", 321));
+		
+		//Statement s = c.createStatement();
+
+		//f2(c);
+		
+//		CallableStatement cs = c.prepareCall("{call fffff(?)}");
+//		cs.setInt(1, 3);
+//		ResultSet rs = cs.executeQuery();
+//		rs.next();
+//		Object o = rs.getObject(1);
+//		System.out.println(o);
+		
 		
 //		for(int i=0; i<10000; ++i) {
 //			String sql = "insert into x values(" + i + ", 'Что-то " + i + "', " + (i * 10) + ")";
