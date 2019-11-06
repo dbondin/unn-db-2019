@@ -1,0 +1,50 @@
+db.human.find({$where:
+function() {
+	   if (obj.age > 30) {
+	      return true;
+	   }
+	   else if(obj.name == "Petya") {
+	      return true;
+	   }
+	   return false;
+}
+});
+
+
+!!!! db.human.aggregate(
+    [
+	{$match: { name: "Petya" }},
+	{
+	    $group: {
+		{ _id: null,
+		  total: { $sum: "$age" }
+		}
+	    }
+	}
+    ]
+)
+
+db.human.aggregate(
+    [ 
+	{ $match: {"age": {$exists: 1}}}, 
+	{ 
+	    $group: {
+		_id: "$name", 
+		summa: {
+		    $sum: "$age"
+		}
+	    }
+	},
+	{
+	    $sort: {"summa": -}
+	}
+    ]);
+
+db.human.mapReduce( 
+   function() { emit(this.name, 1); }, 
+   function(key, values) {return Array.sum(values)}, {  
+      query:{ },  
+      out:"post_total" 
+   }
+	
+).find();

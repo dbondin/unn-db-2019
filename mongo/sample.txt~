@@ -1,0 +1,25 @@
+db.human.find({$where:
+function() {
+	   if (obj.age > 30) {
+	      return true;
+	   }
+	   else if(obj.name == "Petya") {
+	      return true;
+	   }
+	   return false;
+}
+});
+
+
+db.human.aggregate(
+    [
+	{$match: { name: "Petya" }},
+	{
+	    $group: {
+		{ _id: "$_id",
+		  total: { $sum: "$age" }
+		}
+	    }
+	}
+    ]
+)

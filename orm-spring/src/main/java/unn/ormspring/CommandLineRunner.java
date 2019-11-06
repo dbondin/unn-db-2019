@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,11 +78,21 @@ public class CommandLineRunner {
 //			logger.info("  lang {} {}", b.getLang().getId(), b.getLang().getName());
 //		});
 		
-		Lang l = storageService.getLangByName("Русский");
-		logger.info("Lang {} {} {}", l.getId(), l.getName(), l.getDescr());
-		l.getBooks().forEach(b -> {
-			logger.info("  {}", b.getTitle());
-		});
+//		Lang l = storageService.getLangByName("Русский");
+//		logger.info("Lang {} {} {}", l.getId(), l.getName(), l.getDescr());
+//		l.getBooks().forEach(b -> {
+//			logger.info("  {}", b.getTitle());
+//		});
+		
+		//Author a = storageService.addAuthor("Miguel", "Servantes");
+		//storageService.addAuthorToBook(7L, a);
+		
+// TODO: Не работает, но как-то можно сделать
+//		TypedQuery<Book> q = em.createQuery("from Book b where ?1 in b.authors", Book.class);
+//		q.setParameter(1, 8);
+//		q.getResultList().forEach(b -> logger.info("b = {}", b));
+		
+		storageService.xxx();
 	}
 
 }
