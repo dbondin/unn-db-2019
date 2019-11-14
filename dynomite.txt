@@ -1,0 +1,1 @@
+docker run --name dynomite --net=host -d -p 8102:8102 -p 8101:8101 dynomitedb/dynomite
